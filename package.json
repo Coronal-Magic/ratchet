@@ -1,0 +1,15 @@
+{
+  "name": "ratchet",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Dwarfs & Gnomes Battleground - A web-based third-person multiplayer shooter",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:client": "pnpm --filter @ratchet/client dev",
+    "dev:server": "pnpm --filter @ratchet/server dev",
+    "build": "pnpm -r build",
+    "clean": "pnpm -r clean"
+  },
+  "keywords": ["game", "multiplayer", "three.js", "colyseus"],
+  "license": "MIT"
+}

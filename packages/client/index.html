@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ratchet — Dwarfs & Gnomes Battleground</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { overflow: hidden; background: #1a1a2e; font-family: 'Segoe UI', sans-serif; }
+    canvas { display: block; }
+    #ui-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    #lobby {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.85); border: 2px solid #ffd700;
+      border-radius: 16px; padding: 40px; text-align: center;
+      color: #fff; pointer-events: all;
+    }
+    #lobby h1 { font-size: 48px; color: #ffd700; margin-bottom: 8px; }
+    #lobby h2 { font-size: 18px; color: #aaa; margin-bottom: 24px; font-weight: normal; }
+    #lobby input, #lobby select {
+      display: block; width: 100%; padding: 12px; margin: 8px 0;
+      border: 1px solid #555; border-radius: 8px;
+      background: #2a2a4e; color: #fff; font-size: 16px;
+    }
+    #lobby button {
+      margin-top: 16px; padding: 14px 40px; font-size: 20px; font-weight: bold;
+      background: #ffd700; color: #1a1a2e; border: none; border-radius: 8px;
+      cursor: pointer; transition: transform 0.1s;
+    }
+    #lobby button:hover { transform: scale(1.05); }
+    #hud { display: none; }
+    #hud.active { display: block; }
+    .hud-bar {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 12px; align-items: center;
+    }
+    .health-bar, .shield-bar {
+      width: 200px; height: 20px; border-radius: 10px; overflow: hidden;
+      border: 2px solid #fff;
+    }
+    .health-bar { background: #333; }
+    .health-bar .fill { height: 100%; background: #4caf50; transition: width 0.2s; }
+    .shield-bar { background: #333; }
+    .shield-bar .fill { height: 100%; background: #2196f3; transition: width 0.2s; }
+    #score-display {
+      position: absolute; top: 20px; right: 20px;
+      color: #ffd700; font-size: 24px; font-weight: bold;
+    }
+    #turret-parts {
+      position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px;
+    }
+    .turret-part {
+      width: 40px; height: 40px; border: 2px solid #555; border-radius: 8px;
+      background: #2a2a4e; display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #555;
+    }
+    .turret-part.collected { border-color: #ffd700; color: #ffd700; }
+    #crosshair {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 20px; height: 20px; pointer-events: none;
+    }
+    #crosshair::before, #crosshair::after {
+      content: ''; position: absolute; background: rgba(255,255,255,0.8);
+    }
+    #crosshair::before { width: 2px; height: 100%; left: 50%; transform: translateX(-50%); }
+    #crosshair::after { height: 2px; width: 100%; top: 50%; transform: translateY(-50%); }
+  </style>
+</head>
+<body>
+  <div id="ui-overlay">
+    <div id="lobby">
+      <h1>🪓 RATCHET</h1>
+      <h2>Dwarfs & Gnomes Battleground</h2>
+      <input type="text" id="player-name" placeholder="Enter your name..." maxlength="16" />
+      <select id="race-select">
+        <option value="dwarf">⛏️ Dwarf</option>
+        <option value="gnome">🍄 Gnome</option>
+      </select>
+      <select id="variant-select">
+        <option value="miner">Miner</option>
+        <option value="blacksmith">Blacksmith</option>
+        <option value="berserker">Berserker</option>
+      </select>
+      <select id="mode-select">
+        <option value="node_control">🏰 Node Control</option>
+        <option value="last_standing">💀 Last Standing</option>
+      </select>
+      <button id="play-btn">⚔️ FIGHT!</button>
+    </div>
+
+    <div id="hud">
+      <div id="crosshair"></div>
+      <div id="score-display">Score: 0</div>
+      <div id="turret-parts">
+        <div class="turret-part" id="tp-base" title="Base">🔩</div>
+        <div class="turret-part" id="tp-barrel" title="Barrel">🔫</div>
+        <div class="turret-part" id="tp-cell" title="Power Cell">⚡</div>
+        <div class="turret-part" id="tp-target" title="Targeting">🎯</div>
+      </div>
+      <div class="hud-bar">
+        <div class="health-bar"><div class="fill" id="health-fill" style="width:100%"></div></div>
+        <div class="shield-bar"><div class="fill" id="shield-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
