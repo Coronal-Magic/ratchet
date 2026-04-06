@@ -1,4 +1,4 @@
-import { Schema, MapSchema, ArraySchema, type, filter } from '@colyseus/schema';
+import { Schema, MapSchema, ArraySchema, type } from '@colyseus/schema';
 import { PlayerState } from '../entities/PlayerState.js';
 import { NodeState } from '../entities/NodeState.js';
 import { TurretState } from '../entities/TurretState.js';

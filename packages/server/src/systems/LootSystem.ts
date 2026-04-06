@@ -102,7 +102,7 @@ export class LootSystem {
 
   buildTurret(playerId: string, nodeId: number) {
     const player = this.state.players.get(playerId);
-    if (!player || !player.hasAllTurretParts) return;
+    if (!player || !(player.hasBase && player.hasBarrel && player.hasPowerCell && player.hasTargetingModule)) return;
 
     const node = this.state.nodes[nodeId];
     if (!node || node.owner !== playerId || node.hasTurret) return;

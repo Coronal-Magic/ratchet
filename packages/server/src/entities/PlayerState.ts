@@ -31,7 +31,4 @@ export class PlayerState extends Schema {
   @type('boolean') hasPowerCell: boolean = false;
   @type('boolean') hasTargetingModule: boolean = false;
 
-  get hasAllTurretParts(): boolean {
-    return this.hasBase && this.hasBarrel && this.hasPowerCell && this.hasTargetingModule;
-  }
 }
