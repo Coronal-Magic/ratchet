@@ -5,9 +5,12 @@ export class NetworkManager {
   public room?: Room;
 
   constructor() {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const host = window.location.hostname;
-    this.client = new Client(`${protocol}://${host}:2567`);
+    // Colyseus client expects an HTTP(S) endpoint for matchmaking and upgrades to WS internally.
+    // Allow Vite override via env, otherwise default to localhost:2567 for local dev.
+    const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+    const host = import.meta.env.VITE_SERVER_HOST || window.location.hostname || 'localhost';
+    const port = import.meta.env.VITE_SERVER_PORT || '2567';
+    this.client = new Client(`${protocol}://${host}:${port}`);
   }
 
   async joinOrCreate(roomName: string, options: Record<string, any>): Promise<Room> {
